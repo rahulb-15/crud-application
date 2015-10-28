@@ -4,12 +4,14 @@ parse.Initialize("s71MfpFlUNWYhiymV6y8vXOM3Ux9f0jy2RD64CJt", "HTnyEDNCPGV6xQp8EC
 // Create a new sub-class of the Parse.Object, with name "Review"
 var Review = Parse.Object.extend('Review');
 
+console.log('I AM LOADING');
 // $('#stars').raty();
 
 
 // Click event when form is submitted
-$('form').submit(function(event) {
-	event.preventDefault();
+$('#test').submit(function(event) {
+	console.log('Yes, the btn was pressed');
+
 
 	// Create a new instance of your Review class 
 	var review = new Review();
@@ -18,8 +20,8 @@ $('form').submit(function(event) {
 	var title = $('#title').val();
 	var thoughts = $('#thoughts').val();
 
-	var review.set("thoughts", thoughts);
-	var review.set("title", title);
+	review.set("thoughts", thoughts);
+	review.set("title", title);
 	// After setting each property, save your new instance back to your database
 	function successFunc() {
 		console.log('Yay, it worked');
@@ -29,9 +31,7 @@ $('form').submit(function(event) {
 	}
 	
 	review.save().then(successFunc, failFunc);
-
-	return false;
-})
+});
 
 
 
@@ -70,9 +70,8 @@ var buildList = function(data) {
 // This function takes in an item, adds it to the screen
 var addItem = function(item) {
 	// Get parameters (website, band, song) from the data item passed to the function
-	var website = item.get('website')
-	var band = item.get('band')
-	var song = item.get('song')
+	var title = item.get('title')
+	var thoughts = item.get('thoughts')
 	
 	// Append li that includes text from the data item
 	var li = $('<li>Check out ' + band + ', their best song is ' + song + '</li>')
