@@ -1,17 +1,17 @@
-// Initialize Parse app
-parse.Initialize("s71MfpFlUNWYhiymV6y8vXOM3Ux9f0jy2RD64CJt", "HTnyEDNCPGV6xQp8ECR8XiGSb8jSXSIFrdgj9gd2");
-
-// Create a new sub-class of the Parse.Object, with name "Review"
-var Review = Parse.Object.extend('Review');
-
-console.log('I AM LOADING');
 // $('#stars').raty();
+Parse.initialize("s71MfpFlUNWYhiymV6y8vXOM3Ux9f0jy2RD64CJt", "HTnyEDNCPGV6xQp8ECR8XiGSb8jSXSIFrdgj9gd2");
 
-
+var TestObject = Parse.Object.extend("TestObject");
+var testObject = new TestObject();
+testObject.save({foo: "bar"}).then(function(object) {
+  alert("yay! it worked");
+});
 // Click event when form is submitted
-$('#test').submit(function(event) {
-	console.log('Yes, the btn was pressed');
+$('review-submit-btn').on('click', function() {
+	// Create a new sub-class of the Parse.Object, with name "Review"
+	var Review = Parse.Object.extend('Review');
 
+	console.log('Yes, the btn was pressed');
 
 	// Create a new instance of your Review class 
 	var review = new Review();
@@ -22,22 +22,25 @@ $('#test').submit(function(event) {
 
 	review.set("thoughts", thoughts);
 	review.set("title", title);
+
 	// After setting each property, save your new instance back to your database
-	function successFunc() {
-		console.log('Yay, it worked');
-	}
-	function failFunc() {
-		console.log('Oh noes,  it failed');
-	}
+	review.save(null, {
+		success: function(review){
+			alert("hgfh");
+		},
+		error: function(review, error){
+			alert("Failed to create object");
+		}
+	});
 	
-	review.save().then(successFunc, failFunc);
+	//review.save().then(successFunc, failFunc);
 });
 
 
 
 // Write a function to get data
 var getData = function() {
-	
+	var Review = Parse.Object.extend('Review');
 
 	// Set up a new query for our Review class
 	var query = new Parse.Query(Review)
